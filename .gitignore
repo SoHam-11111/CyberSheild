@@ -1,0 +1,27 @@
+﻿# Python cache
+__pycache__/
+*.py[cod]
+
+# Logs and environment files
+*.log
+logs/
+.env
+venv/
+.venv/
+
+# IDE files
+.idea/
+.vscode/
+
+# Backup application files
+app_backup.py
+app_before_alert_diagnostic.py
+app_before_live_monitoring.py
+
+# Old monitoring versions
+monitoring/*_before_*.py
+
+# Old frontend versions
+static/*_before_*.js
+static/*_before_*.css
+templates/*_before_*.html

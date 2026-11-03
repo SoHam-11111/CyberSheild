@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CyberShield | Security Operations Center</title>
+
+    <link rel="stylesheet" href="/static/style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+            <span class="brand-icon">CS</span>
+            <span>CyberShield</span>
+        </div>
+
+        <p class="side-label">SECURITY OPERATIONS</p>
+
+        <a class="nav active" href="#overview">Dashboard</a>
+        <a class="nav" href="#live-monitor">Live Monitoring</a>
+        <a class="nav" href="#alerts">Security Alerts</a>
+        <a class="nav" href="#analytics">Analytics</a>
+        <a class="nav" href="#incidents">Incidents</a>
+
+        <div class="sidebar-footer">
+
+            <span class="status-dot"></span>
+
+            <span>Analytics System</span>
+
+            <small>Hive + Impala + Flask</small>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="main">
+
+        <!-- HEADER -->
+
+        <header class="topbar" id="overview">
+
+            <div>
+
+                <p class="eyebrow">
+                    CYBER THREAT INTELLIGENCE
+                </p>
+
+                <h1>Security Operations Center</h1>
+
+                <p class="muted">
+                    Network monitoring, threat detection and security analytics.
+                </p>
+
+            </div>
+
+            <div class="system-status">
+
+                <span class="status-dot"></span>
+
+                <span id="systemStatus">Dashboard Online</span>
+
+            </div>
+
+        </header>
+
+
+        <!-- LIVE MONITORING -->
+
+        <section class="panel live-panel" id="live-monitor">
+
+            <div class="panel-heading">
+
+                <div>
+
+                    <p class="eyebrow">NETWORK SECURITY</p>
+
+                    <h2>Live Network Monitoring</h2>
+
+                    <p>Capture and analyse network traffic in real time.</p>
+
+                </div>
+
+                <span class="live-indicator" id="monitorBadge">
+                    STOPPED
+                </span>
+
+            </div>
+
+
+            <div class="monitor-controls">
+
+                <div class="interface-info">
+
+                    <span class="card-label">NETWORK INTERFACE</span>
+
+                    <h3 id="interfaceName">Wi-Fi</h3>
+
+                    <span class="muted">
+                        Windows Network Adapter
+                    </span>
+
+                </div>
+
+                <div class="control-buttons">
+
+                    <button id="startMonitor" class="btn-start">
+                        START MONITORING
+                    </button>
+
+                    <button id="stopMonitor" class="btn-stop" disabled>
+                        STOP MONITORING
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- LIVE SUMMARY CARDS -->
+
+            <div class="live-summary-grid">
+
+                <article class="live-card">
+
+                    <span class="card-label">TOTAL PACKETS CAPTURED</span>
+
+                    <h2 id="packetCount">0</h2>
+
+                    <span class="card-note">
+                        Current monitoring session
+                    </span>
+
+                </article>
+
+
+                <article class="live-card">
+
+                    <span class="card-label">SECURITY ALERTS</span>
+
+                    <h2 id="liveAlertCount">0</h2>
+
+                    <span class="card-note">
+                        Heuristic detections
+                    </span>
+
+                </article>
+
+
+                <article class="live-card">
+
+                    <span class="card-label">CAPTURE STATUS</span>
+
+                    <h2 id="captureStatus">Stopped</h2>
+
+                    <span class="card-note">
+                        Scapy + Npcap
+                    </span>
+
+                </article>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- LIVE TRAFFIC TABLE -->
+
+        <section class="panel" id="traffic">
+
+            <div class="panel-heading">
+
+                <div>
+
+                    <h2>Live Network Traffic</h2>
+
+                    <p>Recently captured packet metadata</p>
+
+                </div>
+
+                <span class="record-count" id="trafficCount">
+                    0 packets
+                </span>
+
+            </div>
+
+
+            <div class="table-wrap">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Timestamp</th>
+                            <th>Source IP</th>
+                            <th>Destination IP</th>
+                            <th>Protocol</th>
+                            <th>Destination Port</th>
+                            <th>Packet Size</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="trafficRows">
+
+                        <tr>
+                            <td colspan="6" class="empty-state">
+                                Start monitoring to capture network traffic.
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- SECURITY ALERTS -->
+
+        <section class="panel" id="alerts">
+
+            <div class="panel-heading">
+
+                <div>
+
+                    <h2>Security Alerts</h2>
+
+                    <p>Suspicious network activity detected by the monitoring engine</p>
+
+                </div>
+
+                <span class="record-count" id="alertCount">
+                    0 alerts
+                </span>
+
+            </div>
+
+
+            <div class="table-wrap">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Timestamp</th>
+                            <th>Detection Type</th>
+                            <th>Source IP</th>
+                            <th>Severity</th>
+                            <th>Description</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="alertRows">
+
+                        <tr>
+                            <td colspan="5" class="empty-state">
+                                No security alerts generated yet.
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- HISTORICAL INCIDENT SUMMARY -->
+
+        <section id="analytics">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <p class="eyebrow">BIG DATA ANALYTICS</p>
+
+                    <h2>Historical Security Analytics</h2>
+
+                    <p class="muted">
+                        Incident records processed through Hive and Impala.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="summary-grid">
+
+                <article class="summary-card">
+
+                    <div class="card-label">
+                        Total Incidents
+                    </div>
+
+                    <div class="metric" id="total">--</div>
+
+                    <div class="card-note">
+                        Historical records
+                    </div>
+
+                </article>
+
+
+                <article class="summary-card critical-card">
+
+                    <div class="card-label">
+                        Critical Incidents
+                    </div>
+
+                    <div class="metric" id="critical">--</div>
+
+                    <div class="card-note">
+                        Highest severity
+                    </div>
+
+                </article>
+
+
+                <article class="summary-card detected-card">
+
+                    <div class="card-label">
+                        Detected
+                    </div>
+
+                    <div class="metric" id="detected">--</div>
+
+                    <div class="card-note">
+                        Awaiting response
+                    </div>
+
+                </article>
+
+
+                <article class="summary-card blocked-card">
+
+                    <div class="card-label">
+                        Blocked
+                    </div>
+
+                    <div class="metric" id="blocked">--</div>
+
+                    <div class="card-note">
+                        Recorded as blocked
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- FILTERS -->
+
+        <section class="filters">
+
+            <div>
+
+                <label for="severityFilter">Severity</label>
+
+                <select id="severityFilter">
+
+                    <option value="">All severities</option>
+                    <option>Critical</option>
+                    <option>High</option>
+                    <option>Medium</option>
+                    <option>Low</option>
+
+                </select>
+
+            </div>
+
+
+            <div>
+
+                <label for="statusFilter">Status</label>
+
+                <select id="statusFilter">
+
+                    <option value="">All statuses</option>
+                    <option>Detected</option>
+                    <option>Investigating</option>
+                    <option>Blocked</option>
+                    <option>Contained</option>
+
+                </select>
+
+            </div>
+
+
+            <div>
+
+                <label for="threatFilter">Threat Type</label>
+
+                <select id="threatFilter">
+
+                    <option value="">All threat types</option>
+                    <option>DDoS</option>
+                    <option>Brute Force</option>
+                    <option>Port Scan</option>
+                    <option>Malware</option>
+                    <option>Phishing</option>
+                    <option>Ransomware</option>
+                    <option>SQL Injection</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="search-box">
+
+                <label for="searchInput">Search Incidents</label>
+
+                <input
+                    id="searchInput"
+                    placeholder="Search ID, IP, threat..."
+                >
+
+            </div>
+
+
+            <button id="resetFilters">
+                Reset Filters
+            </button>
+
+        </section>
+
+
+        <!-- CHARTS -->
+
+        <section class="charts-grid">
+
+            <article class="panel">
+
+                <div class="panel-heading">
+
+                    <div>
+
+                        <h2>Threat Distribution</h2>
+
+                        <p>Historical incidents grouped by attack type</p>
+
+                    </div>
+
+                </div>
+
+                <div class="chart-container">
+
+                    <canvas id="threatChart"></canvas>
+
+                </div>
+
+            </article>
+
+
+            <article class="panel">
+
+                <div class="panel-heading">
+
+                    <div>
+
+                        <h2>Severity Distribution</h2>
+
+                        <p>Recorded incident severity levels</p>
+
+                    </div>
+
+                </div>
+
+                <div class="chart-container doughnut">
+
+                    <canvas id="severityChart"></canvas>
+
+                </div>
+
+            </article>
+
+
+            <article class="panel wide-panel">
+
+                <div class="panel-heading">
+
+                    <div>
+
+                        <h2>Incident Response Status</h2>
+
+                        <p>Distribution across response stages</p>
+
+                    </div>
+
+                </div>
+
+                <div class="chart-container status-chart">
+
+                    <canvas id="statusChart"></canvas>
+
+                </div>
+
+            </article>
+
+        </section>
+
+
+        <!-- HISTORICAL INCIDENT TABLE -->
+
+        <section class="panel incident-panel" id="incidents">
+
+            <div class="table-heading">
+
+                <div>
+
+                    <h2>Historical Security Incidents</h2>
+
+                    <p>Search and review stored incident records</p>
+
+                </div>
+
+                <span class="record-count" id="recordCount">
+                    Loading...
+                </span>
+
+            </div>
+
+
+            <div class="table-wrap">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>ID</th>
+                            <th>Threat Type</th>
+                            <th>Source IP</th>
+                            <th>Severity</th>
+                            <th>Status</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="incidentRows"></tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- FOOTER -->
+
+        <footer>
+
+            CyberShield | Big Data Analytics | Hive + Impala |
+            Flask + Scapy + Npcap
+
+        </footer>
+
+    </main>
+
+
+    <script src="/static/dashboard.js"></script>
+
+</body>
+
+</html>
